@@ -16,10 +16,11 @@ function App() {
         </Toolbar>
       </AppBar>
       <Router>
-           <div>
+           <div style={{width: '100px'}}>
         
-                <Button href="/">Customers</Button>
-          
+                <Button variant="outlined" href="/">Customers</Button>
+           </div>
+           <div>
            <Routes>
                   <Route exact path='/' element={< Customerlist />}></Route>
                   <Route exact path='/trainings/:id' element={< Traininglist />}></Route>
