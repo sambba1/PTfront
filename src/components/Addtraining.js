@@ -8,7 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider, DateTimePicker} from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import fiLocale from 'dayjs/locale/fi';
+
 function Addtraining(props){
 
     const [open, setOpen] = useState(false);
@@ -66,9 +67,10 @@ function Addtraining(props){
                         label="Duration"
                         fullWidth
                     />
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={fiLocale}>
                     <DateTimePicker
-                        value={new Date(training.date)}
+                        value={training.date}
+                        inputFormat='DD.MM.YYYY HH.mm'
                         onChange={(newValue) => {
                             handleDateChange(newValue);
                           }}
