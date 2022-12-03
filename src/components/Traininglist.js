@@ -4,10 +4,9 @@ import'ag-grid-community/dist/styles/ag-grid.css';
 import'ag-grid-community/dist/styles/ag-theme-material.css';
 import dayjs from 'dayjs';
 import Button from'@mui/material/Button';
-import Addtraining from './Addtraining'
+import Addtraining from './Addtraining';
 
-
-function Customerlist(){
+function Traininglist(){
 
     const [trainings, setTrainings] = useState([]);
     const [customer, setCustomer] = useState("");
@@ -84,8 +83,9 @@ function Customerlist(){
         <h2>{customer.firstname + " " + customer.lastname}</h2>
         <Addtraining saveTraining={saveTraining} customer={customer}/>
         <AgGridReact rowData={trainings} columnDefs={columns}></AgGridReact>
+ 
     </div>
     );
 
 }
-export default Customerlist;
+export default Traininglist;
