@@ -57,8 +57,10 @@ function Customerlist(){
             headerName: "Date",
             field: "date",
             cellRenderer: function(field){
-                let date = dayjs(field.value).format('DD.MM.YYYY hh:mm');
-                return date
+                let date = dayjs(field.value).format('DD.MM.YYYY HH.mm');
+                if (field.value != null){
+                    return date
+                } 
             },
 
         },     
@@ -66,8 +68,9 @@ function Customerlist(){
             headerName: "",
             field: "links",
             cellRenderer: function(field){
-                
-                return <Button color="warning" onClick={() => deleteTraining(field.value[0].href)} >delete</Button>
+                if (field.value != null){
+                    return <Button color="warning" onClick={() => deleteTraining(field.value[0].href)} >delete</Button>
+                }     
             },
 
         }
