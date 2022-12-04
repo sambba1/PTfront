@@ -2,11 +2,10 @@ import React, {useEffect, useState, useRef} from 'react';
 import { AgGridReact} from'ag-grid-react';
 import'ag-grid-community/dist/styles/ag-grid.css';
 import'ag-grid-community/dist/styles/ag-theme-material.css';
-import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 import Button from'@mui/material/Button';
 import Addcustomer from './Addcustomer';
 import Editcustomer from './Editcustomer';
-
+import {CSVLink} from 'react-csv';
 
 function Customerlist(){
 
@@ -87,12 +86,21 @@ function Customerlist(){
 
         }
     ]
-
+    const headers = [
+    { label: "First Name", key: "firstname" },
+    { label: "Last Name", key: "lastname" },
+    { label: "Email", key: "email" },
+    { label: "Phone", key: "phone" },
+    { label: "City", key: "city" },
+    { label: "Streetaddress", key: "streetaddress" },
+    { label: "Postcode", key: "postcode" }
+    ];
 
     return (
     <div className="ag-theme-material"
         style={{height: '900px', width: '100%', margin: 'center'}} >
         <Addcustomer saveCustomer={saveCustomer}/>
+        <CSVLink data={customers} headers={headers} filename="customers">Download customers</CSVLink>
         <AgGridReact rowData={customers} columnDefs={columns}></AgGridReact>
     </div>
     );

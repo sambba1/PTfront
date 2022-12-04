@@ -5,11 +5,13 @@ import'ag-grid-community/dist/styles/ag-theme-material.css';
 import dayjs from 'dayjs';
 import Button from'@mui/material/Button';
 import Addtraining from './Addtraining';
+import JqxScheduler, { jqx } from 'jqwidgets-scripts/jqwidgets-react-tsx/jqxscheduler';
 
 function Traininglist(){
 
     const [trainings, setTrainings] = useState([]);
     const [customer, setCustomer] = useState("");
+
 
     useEffect(() => fetchData(), []);
 
@@ -19,13 +21,12 @@ function Traininglist(){
         fetch('https://customerrest.herokuapp.com/api/customers/'+urlList[4]+'/trainings')
         .then(response => response.json())
         .then(data => setTrainings(data.content))
-
+       
         fetch('https://customerrest.herokuapp.com/api/customers/'+urlList[4])
         .then(response => response.json())
         .then(data => setCustomer(data))
+        
 
-        
-        
     };
 
     const saveTraining = (training) =>{
@@ -76,14 +77,56 @@ function Traininglist(){
 
     ]
 
+    const source = {
+        dataType: "array",
+        dataFields: [
+          { name: 'activity', type: 'string' },
+          { name: 'date', type: 'date' },
+        ],
+        localData: trainings
+    };
+    
+    const a = {
+        date: new jqx.date(new Date()),
+        source: new jqx.dataAdapter(source),
+        resources: {
+          colorScheme: "scheme05",
+          dataField: "calendar",
+          source: new jqx.dataAdapter(source)
+        },
+        appointmentDataFields: {
+          from: "date",
+          to: "date",
+          subject: "activity",
+          resourceId: "calendar"
+        },
+        views: [
+          'dayView',
+          'weekView',
+          'monthView'
+        ]
+    }
+  
 
     return (
     <div className="ag-theme-material"
-        style={{height: '900px', width: '100%'}} >
+        style={{height: '400px', width: '100%'}} >
         <h2>{customer.firstname + " " + customer.lastname}</h2>
         <Addtraining saveTraining={saveTraining} customer={customer}/>
+        
         <AgGridReact rowData={trainings} columnDefs={columns}></AgGridReact>
- 
+
+        <JqxScheduler
+                width={document.body.offsetWidth}
+                date={a.date}
+                source={a.source}
+                showLegend={true}
+                view={"weekView"}
+                appointmentDataFields={a.appointmentDataFields}
+                resources={a.resources}
+                views={a.views}
+            />
+
     </div>
     );
 
